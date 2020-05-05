@@ -73,7 +73,9 @@ class MatchBuilder
         $teamInfo = $event['details']["team$teamNumber"];
         $players = [];
         foreach ($teamInfo['players'] as $playerInfo) {
-            $players[] = new Player($playerInfo['number'], $playerInfo['name']);
+            $newplayer=new Player($playerInfo['number'], $playerInfo['name']);
+            $newplayer->makePosition($playerInfo['position']);
+            $players[] = $newplayer;
         }
 
         return new Team($teamInfo['title'], $teamInfo['country'], $teamInfo['logo'], $players, $teamInfo['coach']);
@@ -124,14 +126,19 @@ class MatchBuilder
                     $team = $this->getTeamByName($match, $details['team']);
                     $team->getPlayer($details['playerNumber'])->makeRed();
                     break;
-
+                   
             }
+
+            $match->getHomeTeam()->makePosTimeArray();
+            $match->getAwayTeam()->makePosTimeArray();
+             
 
             $match->addMessage(
                 $this->buildMinuteString($period, $event),
                 $event['description'],
                 $this->buildMessageType($event)
             );
+            
         }
     }
 

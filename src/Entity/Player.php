@@ -11,6 +11,7 @@ class Player
     private string $playStatus;
     private int $inMinute;
     private int $outMinute;
+    //private String $position="";
 
     public function __construct(int $number, string $name)
     {
@@ -19,8 +20,10 @@ class Player
         $this->playStatus = self::BENCH_PLAY_STATUS;
         $this->inMinute = 0;
         $this->outMinute = 0;
-        $this->goal=false;
+        $this->goal=[];
         $this->yellow=false;
+        $this->red=false;
+        $this->position="";
     }
 
     public function getNumber(): int
@@ -71,11 +74,27 @@ class Player
 
     public function makeGoal(): void
     {
-        $this->goal = true;
+
+        array_push($this->goal, "gool");
     }
 
     public function makeYellow(): void
     {
         $this->yellow = true;
+    }
+
+    public function makeRed(): voids
+    {
+        $this->red = true;
+    }
+
+    public function makePosition(String $pos): void
+    {
+        $this->position=$pos;
+    }
+
+    public function getPosition(): String
+    {
+        return $this->position;
     }
 }

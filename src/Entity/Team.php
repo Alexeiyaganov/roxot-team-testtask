@@ -8,11 +8,12 @@ class Team
     private string $country;
     private string $logo;
     /**
-     * @var Player[]
+     * @var Player[] 
      */
     private array $players;
     private string $coach;
     private int $goals;
+
 
     public function __construct(string $name, string $country, string $logo, array $players, string $coach)
     {
@@ -24,6 +25,7 @@ class Team
         $this->players = $players;
         $this->coach = $coach;
         $this->goals = 0;
+        $this->postime=[];
     }
 
     public function getName(): string
@@ -39,11 +41,12 @@ class Team
     public function getLogo(): string
     {
         return $this->logo;
-    }
+    
 
     /**
      * @return Player[]
      */
+    }
     public function getPlayersOnField(): array
     {
         return array_filter($this->players, function (Player $player) {
@@ -72,6 +75,7 @@ class Team
             )
         );
     }
+
 
     public function getCoach(): string
     {
@@ -103,4 +107,34 @@ class Team
             }
         }
     }
+
+
+    // эту функцию я написал
+    public function getPosTime(String $position): int
+    {
+        $timepos=0;
+        foreach ($this->players as $player) {
+            if ($player->getPosition() == $position) {
+                $timepos=$timepos+$player->getPlayTime();
+            }
+        }
+        return $timepos;
+    }
+
+    public function makePosTimeArray(): void
+    {
+        $postime=[];
+        $key1="нападающие";
+        $key2="полузащитники";
+        $key3="защитники";
+        $key4="вратари";
+        $postime[$key1] = $this->getPosTime("Н");
+        $postime[$key2] = $this->getPosTime("П");
+        $postime[$key3] = $this->getPosTime("З");
+        $postime[$key4] = $this->getPosTime("В");
+
+        $this->postime=$postime;
+    }
+
+
 }
